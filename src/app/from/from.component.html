@@ -1,0 +1,65 @@
+<!-- <form (ngSubmit)="onSubmit()" #form="ngForm">
+  <input type="text" placeholder="Enter your name" >
+</form> -->
+
+<table border="3px">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>EMAMII</th>
+      <th>AGE</th>
+      <th><button (click)="onInsertData()">+</button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngIf="isInserting">
+      <td>
+      </td>
+      <td>
+        <input type="text" #name>
+      </td>
+      <td>
+        <input type="email" #email>
+      </td>
+      <td>
+        <input type="text" #age>
+      </td>
+      <td>
+        <button (click)="OnInsertSaved()">SAVE</button>
+      </td>
+      <td>
+        <button (click)="OnInsertCancelled()">
+          CLOSE
+        </button>
+      </td>
+    </tr>
+
+    <tr *ngFor="let user of oneUser">
+      <td>{{user.id}}</td>
+
+      <td *ngIf="!isEditing || user.id!==isEditingID">{{user.name}}</td>
+      <td *ngIf="isEditing && user.id==isEditingID">
+        <input type="text" [value]="user.name" #editName>
+      </td>
+
+      <td *ngIf="!isEditing || user.id!==isEditingID">{{user.email}}</td>
+      <td *ngIf="isEditing && user.id==isEditingID">
+        <input type="email" [value]="user.email" #editEmail>
+      </td>
+
+      <td *ngIf="!isEditing || user.id!==isEditingID">{{user.age}}</td>
+      <td *ngIf="isEditing && user.id==isEditingID">
+        <input type="text" [value]="user.age" #editAge>
+      </td>
+
+      <td *ngIf="!isEditing || user.id!==isEditingID"><button (click)="onEditedClicked(user.id)">EDIT</button></td>
+      <td *ngIf="isEditing && user.id==isEditingID"><button (click)="onEditedChange(user)">SAVE-EDIT</button></td>
+      <td><button (click)="deleteUser(user.id)">DELETE</button></td>
+    </tr>
+
+  </tbody>
+</table>
+
