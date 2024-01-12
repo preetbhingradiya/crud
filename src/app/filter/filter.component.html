@@ -1,0 +1,39 @@
+<div style="margin-top: 20px;">
+  <span>GENDER :- </span>
+  <select name="gender" [(ngModel)]="studentFilter">
+    <option value="all">ALL</option>
+    <option value="male">MALE</option>
+    <option value="female">FEMALE</option>
+    <!-- <option value="sde">mverm</option> -->
+  </select>
+</div>
+
+<div style="margin-top: 20px;">
+  <span>EDUCATION :- </span>
+  <select name="gender" [(ngModel)]="studentEducationFilter">
+    <option value="education">EDUCATION</option>
+    <option value="bca">BCA</option>
+    <option value="bba">BBA</option>
+    <option value="bcom">BCOM</option>
+    <!-- <option value="sde">mverm</option> -->
+  </select>
+</div>
+
+<table border="1" style="margin-top: 20px;text-align: center;">
+  <thead>
+    <tr>
+      <th>NAME</th>
+      <th>EMAIL</th>
+      <th>GRNDER</th>
+      <th>EDUCATION</th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let i of students | filter:studentFilter | educationfilter:studentEducationFilter ">
+      <td>{{i.name}}</td>
+      <td>{{i.email}}</td>
+      <td>{{i.gender}}</td>
+      <td>{{i.education}}</td>
+    </tr>
+  </tbody>
+</table>
