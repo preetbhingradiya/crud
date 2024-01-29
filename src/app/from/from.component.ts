@@ -7,7 +7,7 @@ import { userData } from './model/userdata';
 @Component({
   selector: 'app-from',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,],
   templateUrl: './from.component.html',
   styles:['button {cursor:pointer;}']
 })
