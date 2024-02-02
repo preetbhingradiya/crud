@@ -1,15 +1,15 @@
-import { userData } from "../from/model/userdata"
+import { User } from "../components/models/user"
 
 export const USER_LIST_REQUESRT='user list request'
 export const USER_LIST_SUCCESS='user list success'
 
-export class UserListRequest{
+export class UserListRequestAction{
   readonly type=USER_LIST_REQUESRT
 }
 
-export class UserListSuccess{
+export class UserListSuccessAction{
   readonly type=USER_LIST_SUCCESS
 
-  constructor(payload?:{data:userData[]}){
+  constructor(public payload?:{data:User[]}){
   }
 }

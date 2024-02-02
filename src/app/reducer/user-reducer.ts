@@ -1,11 +1,12 @@
-import { userData } from "../from/model/userdata";
+
 import {Action} from '../actions'
 import { USER_LIST_REQUESRT, USER_LIST_SUCCESS } from "../actions/user-action";
+import { User } from "../components/models/user";
 
 export interface UserReducerState{
   loading:boolean,
   loaded:boolean,
-  users :userData[]
+  users :User[]
 }
 
 const initialState:UserReducerState={
