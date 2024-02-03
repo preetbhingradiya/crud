@@ -1,13 +1,13 @@
 <div>
-   <!-- <div > -->
-    <mat-spinner *ngIf="this.loading"></mat-spinner>
+    <mat-spinner *ngIf="loading && !error" style="margin: 0 auto;" ></mat-spinner>
 
-  <div *ngIf="error">
+  <div *ngIf="error && !loading">
     <mat-icon >error_outline</mat-icon>
     <span>Error Occured!</span>
     <button  color="warn" (click)="tryAgain()" >Try Again</button>
   </div>
 
   <components-user-list *ngIf="!this.loading && !this.error" [users]="this.users"></components-user-list>
+
 </div>
 

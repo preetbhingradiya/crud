@@ -13,11 +13,13 @@ import { combineLatest } from 'rxjs';
 import { UserListRepository } from './service/userList.repository';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UpdateUSerComponent } from './layout/update-user.component';
 
 @Component({
   selector: 'app-components',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, UserCardComponent, UserListComponent, MatProgressSpinnerModule, MatIconModule, MatIcon],
+  imports: [CommonModule, HttpClientModule, UserCardComponent, UserListComponent, UpdateUSerComponent,MatProgressSpinnerModule, MatIconModule, MatIcon],
   templateUrl: './components.component.html',
   styleUrl: './components.component.scss',
   providers: [ApiService, HttpService, UserListRepository]
@@ -26,7 +28,7 @@ export class ComponentsComponent {
 
   users: User[] = []
 
-  loading: boolean = false;
+  loading:boolean=false;
   error: boolean = false
 
   constructor(private userList: UserListRepository) { }
@@ -48,13 +50,12 @@ export class ComponentsComponent {
       this.users = res
     })
 
-    Loading.subscribe((data) => {
+    Loading.subscribe(data => {
       this.loading = data
-      }
-    )
+    })
 
     Error.subscribe((err) => {
-      this.loading = err
+      this.error = err
     })
   }
 
