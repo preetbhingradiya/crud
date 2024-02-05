@@ -21,4 +21,8 @@ export const getUserLoading=createSelector(getUserState,fromUser.getLoading)
 export const getUsers=createSelector(getUserState,fromUser.getUsers)
 export const getUserError=createSelector(getUserState,fromUser.getError)
 
-
+export const getUserEntites=createSelector(getUserState,fromUser.getEntites)
+export const getUserById=(state:RootReducerState,id:number)=>{
+  const entites=getUserEntites(state)
+  return entites[id];
+}
