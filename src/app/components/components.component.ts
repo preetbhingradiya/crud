@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from './models/user';
 import { ApiService } from './service/api.service';
 import { HttpService } from './service/http.service';
@@ -9,32 +9,39 @@ import { UserListComponent } from './layout/user-list.component';
 import { Store } from '@ngrx/store';
 import { RootReducerState, getUserLoad, getUserLoading, getUsers } from '../reducer/index-reducer';
 import { UserListRequestAction, UserListSuccessAction } from '../actions/user-action';
-import { combineLatest } from 'rxjs';
+import { combineLatest, takeWhile } from 'rxjs';
 import { UserListRepository } from './service/userList.repository';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UpdateUSerComponent } from './layout/update-user.component';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog"
+
 
 @Component({
   selector: 'app-components',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, UserCardComponent, UserListComponent, UpdateUSerComponent,MatProgressSpinnerModule, MatIconModule, MatIcon],
+  imports: [CommonModule, HttpClientModule, UserCardComponent, UserListComponent, UpdateUSerComponent,MatProgressSpinnerModule, MatIconModule, MatIcon,MatDialogModule],
   templateUrl: './components.component.html',
   styleUrl: './components.component.scss',
   providers: [ApiService, HttpService, UserListRepository]
 })
-export class ComponentsComponent {
+export class ComponentsComponent implements OnInit,OnDestroy {
 
   users: User[] = []
 
   loading:boolean=false;
   error: boolean = false
+  isAlive:boolean=true
 
-  constructor(private userList: UserListRepository) { }
+  constructor(private userList: UserListRepository,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.fetchData()
+  }
+
+  ngOnDestroy(): void {
+      this.isAlive=false
   }
 
   //dependency injection
@@ -46,17 +53,21 @@ export class ComponentsComponent {
     const userData = observable$[1];
     const Error = observable$[2];
 
-    userData.subscribe((res) => {
+    userData.pipe(takeWhile(()=>this.isAlive)).subscribe((res) => {
       this.users = res
     })
 
-    Loading.subscribe(data => {
+    Loading.pipe(takeWhile(()=>this.isAlive)).subscribe(data => {
       this.loading = data
     })
 
-    Error.subscribe((err) => {
+    Error.pipe(takeWhile(()=>this.isAlive)).subscribe((err) => {
       this.error = err
     })
+  }
+
+  addUser(){
+    this.dialog.open(UpdateUSerComponent,{width:'256px'})
   }
 
   tryAgain() {

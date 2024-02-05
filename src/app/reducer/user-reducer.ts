@@ -1,6 +1,6 @@
 
 import {Action} from '../actions'
-import { USER_DELETE, USER_LIST_ERROR, USER_LIST_REQUESRT, USER_LIST_SUCCESS } from "../actions/user-action";
+import { USER_DELETE, USER_LIST_ADD_USER, USER_LIST_ERROR, USER_LIST_REQUESRT, USER_LIST_SUCCESS, USER_LIST_UPDATE } from "../actions/user-action";
 import { User } from "../components/models/user";
 
 export interface UserReducerState{
@@ -31,6 +31,18 @@ export function UserReducer(state=initialState,action:Action):UserReducerState{
     case USER_LIST_SUCCESS:{
       let updatedUser=state.users.concat(action.payload.data);
       return {...state,loaded:true,loading:false,users:updatedUser,error:false}
+    }
+
+    case USER_LIST_ADD_USER:{
+      const users=state.users.concat(action.payload.data)
+      return {...state,...{users}}
+    }
+
+    case USER_LIST_UPDATE:{
+      const users=state.users.filter(data=>data.id !== action.payload.data.id)
+      console.log(users);
+      const UpdateUser=users.concat(action.payload.data)
+      return {...state,...{users:UpdateUser}}
     }
 
     case USER_DELETE:{

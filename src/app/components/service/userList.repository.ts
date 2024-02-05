@@ -3,7 +3,7 @@ import { ApiService } from "./api.service";
 import { Store } from "@ngrx/store";
 import { RootReducerState, getUserError, getUserLoad, getUserLoading, getUsers } from "../../reducer/index-reducer";
 import { Observable, combineLatest, take } from "rxjs";
-import { UserDeleteAction, UserListErrorAction, UserListRequestAction, UserListSuccessAction } from "../../actions/user-action";
+import { UserDeleteAction, UserListAddAction, UserListErrorAction, UserListRequestAction, UserListSuccessAction, UserUpdateAction } from "../../actions/user-action";
 import { User } from "../models/user";
 
 
@@ -39,5 +39,13 @@ export class UserListRepository {
   DeleteUser(id:number){
     //first can delete actual user
     this.store.dispatch(new UserDeleteAction({id}))
+  }
+
+  UpdateUser(data:User){
+    this.store.dispatch(new UserUpdateAction({data}))
+  }
+
+  addUser(data:User){
+    this.store.dispatch(new UserListAddAction({data}))
   }
 }

@@ -9,5 +9,6 @@
 
   <components-user-list *ngIf="!this.loading && !this.error" [users]="this.users"></components-user-list>
 
+  <button (click)="addUser()"  *ngIf="!this.loading && !this.error">Add User</button>
 </div>
 
